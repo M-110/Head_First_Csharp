@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeHive", "BeeHive.csproj", "{817FDEB6-B811-48EF-868C-A58F0CDDA75D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{817FDEB6-B811-48EF-868C-A58F0CDDA75D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{817FDEB6-B811-48EF-868C-A58F0CDDA75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{817FDEB6-B811-48EF-868C-A58F0CDDA75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{817FDEB6-B811-48EF-868C-A58F0CDDA75D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91E0F224-C28C-47F4-85D1-EA7C09AE36AE}
+	EndGlobalSection
+EndGlobal
