@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeckWriter", "DeckWriter.csproj", "{A91EB27E-86DD-4E94-922C-BE92562A7B42}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A91EB27E-86DD-4E94-922C-BE92562A7B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91EB27E-86DD-4E94-922C-BE92562A7B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91EB27E-86DD-4E94-922C-BE92562A7B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91EB27E-86DD-4E94-922C-BE92562A7B42}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A3CC48C-8CE9-475B-AEDC-B484F10168DF}
+	EndGlobalSection
+EndGlobal
