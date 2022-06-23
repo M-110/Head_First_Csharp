@@ -1,6 +1,4 @@
-﻿using System.Collections.Specialized;
-
-namespace HideAndSeek;
+﻿namespace HideAndSeek;
 
 public static class House
 {
@@ -12,30 +10,30 @@ public static class House
     {
         Entry = new Location("Entry");
 
-        var garage = new Location("Garage");
+        var garage = new LocationWithHidingPlace("Garage", "behind the car");
         var hallway = new Location("Hallway");
-        var livingRoom = new Location("Living Room");
-        var bathroom = new Location("Bathroom");
-        var kitchen = new Location("Kitchen");
-        var pantry = new Location("Pantry");
-        var kidsRoom = new Location("Kids Room");
+        var livingRoom = new LocationWithHidingPlace("Living Room", "behind the sofa");
+        var bathroom = new LocationWithHidingPlace("Bathroom", "behind the door");
+        var kitchen = new LocationWithHidingPlace("Kitchen", "next to the stove");
+        var pantry = new LocationWithHidingPlace("Pantry", "inside a cabinet");
+        var kidsRoom = new LocationWithHidingPlace("Kids Room", "behind the door");
         var landing = new Location("Landing");
-        var nursery = new Location("Nursery");
-        var secondBathroom = new Location("Second Bathroom");
-        var masterBedroom = new Location("Master Bedroom");
-        var masterBath = new Location("Master Bath");
-        var attic = new Location("Attic");
+        var nursery = new LocationWithHidingPlace("Nursery", "inside a cabinet");
+        var secondBathroom = new LocationWithHidingPlace("Second Bathroom", "in the shower");
+        var masterBedroom = new LocationWithHidingPlace("Master Bedroom", "under the bed");
+        var masterBath = new LocationWithHidingPlace("Master Bath", "inside a cabinet");
+        var attic = new LocationWithHidingPlace("Attic", "in a trunk");
 
         _locations.Add(Entry);
-        _locations.Add( garage);
-        _locations.Add( hallway);
+        _locations.Add(garage);
+        _locations.Add(hallway);
         _locations.Add(livingRoom);
-        _locations.Add( bathroom);
-        _locations.Add( kitchen);
-        _locations.Add( pantry);
+        _locations.Add(bathroom);
+        _locations.Add(kitchen);
+        _locations.Add(pantry);
         _locations.Add(kidsRoom);
-        _locations.Add( landing);
-        _locations.Add( nursery);
+        _locations.Add(landing);
+        _locations.Add(nursery);
         _locations.Add(secondBathroom);
         _locations.Add(masterBedroom);
         _locations.Add(masterBath);
@@ -66,13 +64,19 @@ public static class House
 
     public static Location RandomExit(Location location)
     {
-        var exits = location.Exits.OrderBy(pair => pair.Value.ToString()).Select(pair => pair.Value).ToList();
-        return exits[Random.Next()];
+        var exits = location.Exits
+            .OrderBy(pair => pair.Value.ToString())
+            .Select(pair => pair.Value)
+            .ToList();
+        return exits[Random.Next()%exits.Count];
     }
 
     public static void ClearHidingPlaces()
     {
-
+        foreach (var location in _locations.OfType<LocationWithHidingPlace?>())
+        {
+            location?.CheckHidingPlace();
+        }
     }
 
 }

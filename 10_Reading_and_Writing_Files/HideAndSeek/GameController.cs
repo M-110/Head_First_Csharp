@@ -6,7 +6,7 @@ public class GameController
     /// <summary>
     /// List of opponents to be found
     /// </summary>
-    public readonly IEnumerable<Opponent> Opponents = new List<Opponent>()
+    public readonly List<Opponent> Opponents = new ()
     {
         new Opponent("Joe"),
         new Opponent("Bob"),
@@ -18,7 +18,7 @@ public class GameController
     /// <summary>
     /// Private list of opponents that have been found
     /// </summary>
-    readonly IEnumerable<Opponent> foundOpponents = new List<Opponent>();
+    readonly List<Opponent> foundOpponents = new List<Opponent>();
 
     /// <summary>
     /// Player's current location in the house
@@ -38,12 +38,40 @@ public class GameController
     /// <summary>
     /// Player's current status
     /// </summary>
-    public string Status => $"You are in the {CurrentLocation.Name}. You see the following exits:" 
-                            + Environment.NewLine 
-                            + string.Join(Environment.NewLine, CurrentLocation.Exits
-                                .OrderBy(exit => exit.Key.ToString())
-                                .Select(exit 
-                                    => $" - the {exit.Value.Name} to the {exit.Key}"));
+    public string Status => LocationStatus() + HidingPlaceStatus() + FoundOpponentsStatus();
+
+    public string LocationStatus()
+    {
+        return $"You are in the {CurrentLocation.Name}. You see the following exits:"
+            + Environment.NewLine
+            + string.Join(Environment.NewLine, CurrentLocation.Exits
+                .OrderBy(exit => exit.Key.ToString())
+                .Select(exit
+                    => $" - the {exit.Value.Name} {DirectionPreposition(exit.Key)} {exit.Key}"));
+    }
+
+    string DirectionPreposition(Direction direction)
+    {
+        if (direction is Direction.Up or Direction.Down or Direction.In or Direction.Out)
+            return "is";
+        return "is to the";
+    }
+
+    string HidingPlaceStatus()
+    {
+        if (CurrentLocation is not LocationWithHidingPlace hidingPlace)
+            return "";
+        return Environment.NewLine + $"Someone could hide {hidingPlace.HidingPlace}";
+    }
+
+    string FoundOpponentsStatus()
+    {
+        if (!foundOpponents.Any())
+            return Environment.NewLine + "You have not found any opponents";
+        var plural = Opponents.Count != 1 ? "s" : "";
+        var opponentsString = string.Join(", ", foundOpponents.Select(opponent => opponent.Name));
+        return Environment.NewLine + $"You have found {foundOpponents.Count} of {Opponents.Count} opponent{plural}: {opponentsString}";
+    }
 
     /// <summary>
     /// Prompt to display to the player
@@ -81,6 +109,10 @@ public class GameController
     /// <returns>Resulting command of the input</returns>
     public string ParseInput(string input)
     {
+        MoveNumber += 1;
+        if (input.Contains("check", StringComparison.CurrentCultureIgnoreCase))
+            return CheckForHider();
+
         if (!Enum.TryParse<Direction>(input, true, out var direction))
             return "That's not a valid direction";
 
@@ -92,4 +124,16 @@ public class GameController
         return $"Moving {direction}";
     }
 
+    string CheckForHider()
+    {
+        if (CurrentLocation is not LocationWithHidingPlace hidingPlace)
+            return $"There is no hiding place in the {CurrentLocation.Name}";
+        var hiders = hidingPlace.CheckHidingPlace().ToList();
+        foundOpponents.AddRange(hiders);
+        var hidersCount = hiders.Count;
+        var plural = hidersCount > 1 ? "s" : "";
+        if (hidersCount > 0)
+            return $"You found {hidersCount} opponent{plural} hiding {hidingPlace.HidingPlace}";
+        return $"Nobody was hiding {hidingPlace.HidingPlace}";
+    }
 }

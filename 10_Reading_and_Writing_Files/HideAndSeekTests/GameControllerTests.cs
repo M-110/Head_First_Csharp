@@ -118,17 +118,17 @@ public class GameControllerTests
 
         Assert.AreEqual("Moving East", gameController.ParseInput("East"));
         var expectedStatus = "You are in the Hallway. You see the following exits:" +
-                             Environment.NewLine + " - the Bathroom to the North" +
-                             Environment.NewLine + " - the Kitchen to the Northwest" +
-                             Environment.NewLine + " - the Living Room to the South" +
-                             Environment.NewLine + " - the Landing to the Up" +
-                             Environment.NewLine + " - the Entry to the West" + 
+                             Environment.NewLine + " - the Bathroom is to the North" +
+                             Environment.NewLine + " - the Kitchen is to the Northwest" +
+                             Environment.NewLine + " - the Living Room is to the South" +
+                             Environment.NewLine + " - the Landing is Up" +
+                             Environment.NewLine + " - the Entry is to the West" + 
                              Environment.NewLine + "You have not found any opponents";
         Assert.AreEqual(expectedStatus, gameController.Status);
 
         Assert.AreEqual("Moving South", gameController.ParseInput("South"));
         Assert.AreEqual("You are in the Living Room. You see the following exits:" + 
-                        Environment.NewLine + " - the Hallway to the North" +
+                        Environment.NewLine + " - the Hallway is to the North" +
                         Environment.NewLine + "Someone could hide behind the sofa" + 
                         Environment.NewLine + "You have not found any opponents", gameController.Status);
 

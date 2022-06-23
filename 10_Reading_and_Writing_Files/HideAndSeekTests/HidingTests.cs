@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HideAndSeekTests;
 
 [TestClass]
-public class HideAndSeekTests
+public class HidingTests
 {
     [TestMethod]
     public void TestHiding()
