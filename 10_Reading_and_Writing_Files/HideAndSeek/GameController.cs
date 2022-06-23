@@ -1,4 +1,6 @@
-﻿namespace HideAndSeek;
+﻿using System.Text.Json;
+
+namespace HideAndSeek;
 
 public class GameController
 {
@@ -6,7 +8,7 @@ public class GameController
     /// <summary>
     /// List of opponents to be found
     /// </summary>
-    public readonly List<Opponent> Opponents = new ()
+    public List<Opponent> Opponents = new ()
     {
         new Opponent("Joe"),
         new Opponent("Bob"),
@@ -18,7 +20,7 @@ public class GameController
     /// <summary>
     /// Private list of opponents that have been found
     /// </summary>
-    readonly List<Opponent> foundOpponents = new List<Opponent>();
+    public List<Opponent> foundOpponents = new List<Opponent>();
 
     /// <summary>
     /// Player's current location in the house
@@ -109,6 +111,10 @@ public class GameController
     /// <returns>Resulting command of the input</returns>
     public string ParseInput(string input)
     {
+        if (input.ToLower().StartsWith("save"))
+            return Save(input);
+        if (input.ToLower().StartsWith("load"))
+            return Load(input);
         MoveNumber += 1;
         if (input.Contains("check", StringComparison.CurrentCultureIgnoreCase))
             return CheckForHider();
@@ -122,6 +128,61 @@ public class GameController
             return "There's no exit in that direction";
         CurrentLocation = newLocation;
         return $"Moving {direction}";
+    }
+
+    string Save(string input)
+    {
+        var fileName = input.Replace("save ", "");
+        var opponentLocations = new Dictionary<string, string>();
+        foreach (var location in House._locations.OfType<LocationWithHidingPlace>())
+            foreach (var opponent in location.hiddenOpponents)
+                opponentLocations[opponent.Name] = location.Name;
+
+        var savedGame = new SavedGame(
+            CurrentLocation.Name,
+            opponentLocations,
+            foundOpponents.Select(opponent => opponent.Name).ToList(),
+            MoveNumber
+        );
+        var jsonString = JsonSerializer.Serialize(savedGame);
+        File.WriteAllText(fileName, jsonString);
+        return $"Saved to file \"{fileName}\"";
+    }
+
+    string Load(string input)
+    {
+        var fileName = input.Replace("load ", "");
+        var jsonString = File.ReadAllText(fileName);
+        var loadedGame = JsonSerializer.Deserialize<SavedGame>(jsonString);
+
+
+        House.ClearHidingPlaces();
+
+        var newOpponentList = new List<Opponent>();
+        var newFoundOpponentList = new List<Opponent>();
+        foreach (var opponentName in loadedGame.FoundOpponents)
+        {
+            var newOpponent = new Opponent(opponentName);
+
+            newOpponentList.Add(newOpponent);
+            newFoundOpponentList.Add(newOpponent);
+        }
+
+        foreach (var opponentPair in loadedGame.OpponentLocations)
+        {
+            var newOpponent = new Opponent(opponentPair.Key);
+            var location = House.GetLocationByName(opponentPair.Value) as LocationWithHidingPlace;
+            location.hiddenOpponents.Add(newOpponent);
+            newOpponentList.Add(newOpponent);
+        }
+
+        CurrentLocation = House.GetLocationByName(loadedGame.PlayerLocation);
+        Opponents = newOpponentList;
+        foundOpponents = newFoundOpponentList;
+        MoveNumber = loadedGame.Moves;
+
+
+        return $"Loaded from file \"{fileName}\"";
     }
 
     string CheckForHider()

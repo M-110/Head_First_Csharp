@@ -4,7 +4,7 @@ public static class House
 {
     public static Random Random = new Random();
     public static Location Entry;
-    static List<Location> _locations = new();
+    public static List<Location> _locations = new();
 
     static House()
     {

@@ -2,7 +2,7 @@
 
 public class LocationWithHidingPlace : Location
 {
-    List<Opponent> hiddenOpponents = new();
+    public List<Opponent> hiddenOpponents = new();
     public string HidingPlace {get;}
     public LocationWithHidingPlace(string name, string description) : base(name)
     {
