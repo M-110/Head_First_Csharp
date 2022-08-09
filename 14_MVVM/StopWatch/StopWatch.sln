@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32714.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopWatch", "StopWatch.csproj", "{FE209AB6-86B5-403E-92BD-6C0AD7450205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfStopwatch", "..\WpfStopwatch\WpfStopwatch.csproj", "{FD021227-59C1-4A9B-A268-138C15433956}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE209AB6-86B5-403E-92BD-6C0AD7450205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE209AB6-86B5-403E-92BD-6C0AD7450205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE209AB6-86B5-403E-92BD-6C0AD7450205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE209AB6-86B5-403E-92BD-6C0AD7450205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD021227-59C1-4A9B-A268-138C15433956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD021227-59C1-4A9B-A268-138C15433956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD021227-59C1-4A9B-A268-138C15433956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD021227-59C1-4A9B-A268-138C15433956}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B42AAC99-7124-47B0-BD7C-AAB598B53F01}
+	EndGlobalSection
+EndGlobal

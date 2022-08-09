@@ -2,33 +2,47 @@
 
 public partial class MainPage : ContentPage
 {
-	private List<string> animals = new()
-	{
-		"🐯", "🐺", "🐷", "🐭", "🐸", "🐻", "🐶", "🐵",
-		"🐯", "🐺", "🐷", "🐭", "🐸", "🐻", "🐶", "🐵"
-	};
+    List<string> animals = new() 
+    {
+        "🐯", "🐺", "🐷", "🐭", "🐸", "🐻", "🐶", "🐵", 
+        "🐯", "🐺", "🐷", "🐭", "🐸", "🐻", "🐶", "🐵" 
+    };
 
-	string selectedAnimal = "";
+    Button selectedButton;
+    
+    public MainPage() 
+    { 
+        InitializeComponent(); 
+        SetupAnimals(); 
+    }
 
-	public MainPage()
-	{
-		InitializeComponent();
-		SetupAnimals();
-	}
+    void SetupAnimals()
+    {
+        var random = new Random();
+        animals = animals.OrderBy(_ => random.Next()).ToList();
+        for (var i = 0; i < 16; i++)
+            ((Button)MainGrid.Children[i]).Text = animals[i];
+    }
 
-	void SetupAnimals()
-	{
-		var random = new Random();
-		animals = animals.OrderBy(_ => random.Next()).ToList();
-		for (var i = 0; i < 16; i++)
-			(MainGrid.Children[i] as Button).Text = animals[i];
-	}
+    void BlockClicked(object sender, EventArgs args)
+    {
+        var button = sender as Button;
 
-	void BlockClicked(object sender, EventArgs args)
-	{
-		var button = sender as Button;
-		button.Text = "HELLO";
-
-	}
+        if (selectedButton is not null)
+        {
+            if (button.Text == selectedButton.Text)
+            {
+                button.Text = "X";
+                selectedButton.Text = "X";
+            }
+            else
+            {
+                selectedButton = null;
+            }
+        }
+        else
+        {
+            selectedButton = button;
+        }
+    }
 }
-
